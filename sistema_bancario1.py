@@ -12,18 +12,18 @@ while True:
             saque = float(input("Insira o valor do saque: "))
             if saque > saldo_conta: 
                 print("Saldo insuficiente")
-                print("Saldo: R$ ", saldo_conta)
+                print(f"Saldo: R$  {saldo_conta:.2f}")
                 print("Tente depositar antes")
     
             elif saque <= 0:
                 print("Valor inválido")
                 
             elif saque > 500:
-                print(f"Atingiu o limite de saque: 500, você tentou sacar: {saque}")
+                print(f"Atingiu o limite de saque: 500, você tentou sacar: {saque:.2f}")
             else:
                 saldo_conta -= saque
                 print("Saque realizado com sucesso")
-                extrato.append(f"você sacou: {saque}")
+                extrato.append(f"você sacou: {saque:.2f}")
                 limite_saques_diarios += 1
             
     elif opcao == 2: #Depósito
@@ -32,13 +32,13 @@ while True:
             print("Valor inválido")
         else:
             print("Depósito realizado com sucesso")
-            extrato.append(f"voce depositou {deposito}")
+            extrato.append(f"voce depositou {deposito:.2f}")
             saldo_conta += deposito
             
     elif opcao == 3: #Extrato
         for i in extrato:
             print(i)
-        print(f"Saldo atual: {saldo_conta}")
+        print(f"Saldo atual: {saldo_conta:.2f}")
         
     elif opcao == 4: #Sair
         break
