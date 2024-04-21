@@ -88,7 +88,8 @@ print(f'{Status} na sua transação')
 
 numero= 1
 
-for numero in range(numero, 11):
+
+for numero in range(1, 11):
     
     if numero % 2 == 0:
         
