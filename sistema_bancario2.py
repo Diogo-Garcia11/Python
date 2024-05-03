@@ -6,10 +6,10 @@ extrato_conta = []
 
 usuarios ={
         "46764696837":{
-            "nome": "Diogo Pinheiro Garcia",
-            "cpf": "46764696837",
-            "data_nascimento": "15/02/2006",
-            "endereco": "Rua Lázaro Rossi, 350, Vila Beatriz, São Bernardo do Campo/SP",
+            "nome": "xxxxxxxxxxxxxxxxx",
+            "cpf": "xxxxxxxxxxx",
+            "data_nascimento": "xx/xx/xxxx",
+            "endereco": "xxxxxxxx, xxx, xxxxxxx, xxx/xx",
         }
 }
 
@@ -17,7 +17,7 @@ conta = {
     "1":{
         "agencia": "0001",
         "conta": "1",
-        "usuario": "Diogo Pinheiro Garcia",
+        "usuario": "xxxxxxxxxxxxxxxxxxxx",
     }
 }
 
