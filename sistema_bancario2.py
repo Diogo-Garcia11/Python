@@ -107,8 +107,8 @@ def cadastrar_conta(conta, usuarios):
     while num_conta in conta.keys():
         num_conta += 1
 
-    agencia = "0001"
-    conta.update({ num_conta : {"agencia": agencia, "conta": num_conta , "usuarios": usuario_quem}})
+    AGENCIA = "0001"
+    conta.update({ num_conta : {"agencia": AGENCIA, "conta": num_conta , "usuarios": usuario_quem}})
     return conta, usuarios
 
 def listar_usuarios():
@@ -119,7 +119,7 @@ def listar_contas():
     for chave, valor in conta.items():
         print(chave, valor)
 
-def funcao_saque(limite, saldo, extrato):
+def funcao_saque(*,limite, saldo, extrato):
     if limite >= 3:
         print("Limite diário de saques atingido")
         return limite, saldo, extrato
@@ -143,7 +143,7 @@ def funcao_saque(limite, saldo, extrato):
             limite += 1
             return limite, saldo, extrato
 
-def funcao_deposito(saldo, extrato):
+def funcao_deposito(saldo,/, *, extrato):
     deposito = float(input("Insira o valor do depósito: "))
     if deposito <= 0:
         print("Valor inválido")
