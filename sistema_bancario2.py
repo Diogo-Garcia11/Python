@@ -143,7 +143,7 @@ def funcao_saque(*,limite, saldo, extrato):
             limite += 1
             return limite, saldo, extrato
 
-def funcao_deposito(saldo,/, *, extrato):
+def funcao_deposito( saldo, extrato):
     deposito = float(input("Insira o valor do depósito: "))
     if deposito <= 0:
         print("Valor inválido")
@@ -154,7 +154,7 @@ def funcao_deposito(saldo,/, *, extrato):
         saldo += deposito   
         return saldo, extrato
 
-def funcao_extrato(saldo, extrato):
+def funcao_extrato(saldo,/,*, extrato):
     if extrato == [] or extrato == None:
         print("Nenhuma operação realizada ainda")
     else:
