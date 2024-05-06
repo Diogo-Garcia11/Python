@@ -10,12 +10,6 @@ usuarios ={
             "cpf": "xxxxxxxxxxx",
             "data_nascimento": "xx/xx/xxxx",
             "endereco": "xxxxxxxx, xxx, xxxxxxx, xxx/xx",
-        },
-        "10755414845":{
-            "nome": "Marli",
-            "cpf": "xxxxxxxxxxx",
-            "data_nascimento": "xx/xx/xxxx",
-            "endereco": "xxxxxxxx, xxx, xxxxxxx, xxx/xx",
         }
 }
 
