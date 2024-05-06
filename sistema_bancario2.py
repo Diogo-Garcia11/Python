@@ -115,6 +115,7 @@ def cadastrar_conta(conta, usuarios):
 
     AGENCIA = "0001"
     conta.update({ chave_nova : {"agencia": AGENCIA, "conta": chave_nova , "usuarios": usuario_quem}})
+    print(f"Número da sua conta: {chave_nova}")
     return conta, usuarios
 
 def listar_usuarios():
