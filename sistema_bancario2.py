@@ -10,6 +10,12 @@ usuarios ={
             "cpf": "xxxxxxxxxxx",
             "data_nascimento": "xx/xx/xxxx",
             "endereco": "xxxxxxxx, xxx, xxxxxxx, xxx/xx",
+        },
+        "10755414845":{
+            "nome": "Marli",
+            "cpf": "xxxxxxxxxxx",
+            "data_nascimento": "xx/xx/xxxx",
+            "endereco": "xxxxxxxx, xxx, xxxxxxx, xxx/xx",
         }
 }
 
@@ -103,10 +109,18 @@ def cadastrar_conta(conta, usuarios):
     else:
         usuario_quem = usuarios[cpf_do_usuario]["nome"]
 
-    num_conta = len(conta) + 1
+    chave_nova = len(conta) + 1
+    # num_conta = 1
+    # for chave in conta.keys():
+    #     if chave is num_conta:
+    #         num_conta += 1
+    #     elif chave is not num_conta:
+    #         chave_nova = num_conta
+            
+            
 
     AGENCIA = "0001"
-    conta.update({ num_conta : {"agencia": AGENCIA, "conta": num_conta , "usuarios": usuario_quem}})
+    conta.update({ chave_nova : {"agencia": AGENCIA, "conta": chave_nova , "usuarios": usuario_quem}})
     return conta, usuarios
 
 def listar_usuarios():
