@@ -103,9 +103,7 @@ def cadastrar_conta(conta, usuarios):
     else:
         usuario_quem = usuarios[cpf_do_usuario]["nome"]
 
-    num_conta = 1
-    while num_conta in conta.keys():
-        num_conta += 1
+    num_conta = len(conta) + 1
 
     AGENCIA = "0001"
     conta.update({ num_conta : {"agencia": AGENCIA, "conta": num_conta , "usuarios": usuario_quem}})
