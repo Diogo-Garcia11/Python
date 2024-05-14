@@ -3,50 +3,51 @@ import mysql.connector
 from mysql.connector import Error
 
 class Conexao:
-    def __init__(self, host, user, password, database):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.database = database
+    def Dados():
+        CONEXAO = mysql.connector.connect(host='localhost',
+                                           user='root',
+                                           password='', 
+                                           database='pythonproj'
+                                           )
+        return CONEXAO
 
-        self.config = {
-            'host': self.host,
-            'user': self.user,
-            'password': self.password,
-            'database': self.database
-            }
-        self.Conexao = self.Conectar()
-
-    def Conectar(self):
+    def Conectar():
         # """Cria uma conexão com o banco de dados MySQL."""
         try:
-            Conexao = mysql.connector.connect(**self.config)
-            if Conexao.is_connected():
-                print("Conexão bem-sucedida!")
-            return Conexao
+            CONEXAO = Conexao.Dados()
+            if CONEXAO.is_connected():
+                print("Conexão Aberta com sucesso com o banco de dados.")
+            return CONEXAO
         except Error as e:
             print(f"Erro ao conectar: {e}")
             return None 
         
-    def Desconectar(self):
+    def Desconectar():
         # """Fecha a conexão com o banco de dados."""
-        if self.Conexao.is_connected():
-            self.Conexao.close()
-            print("Conexão fechada.")
+        CONEXAO = Conexao.Dados()
+        if CONEXAO.is_connected():
+            CONEXAO.close()
+            print("Conexão fechada com sucesso com o banco de dados.")
 
-    def Inserir(self, primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento):
+    def Inserir(primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento):
         # """Insere um novo usuário na tabela."""
-        cursor = self.Conexao.cursor()
-        cursor.execute("""
+        CONEXAO = Conexao.Dados()
+        CURSOR = CONEXAO.cursor()
+        CURSOR.execute("""
             INSERT INTO tb_usuario (primeiro_nome_usuario, ultimo_nome_usuario, email_usuario, senha_usuario, cpf_usuario, data_nasc_usuario) VALUES (%s, %s, %s, %s, %s, %s)
-        """, ( primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento))
-        self.Conexao.commit()
-        cursor.close()
+        """, (primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento))
+        CONEXAO.commit()
+        CURSOR.close()
+        print("Dados Cadastrados com sucesso no banco de dados.")
 
-    def Atualizar(self, primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento):
-        cursor = self.Conexao.cursor()
-        cursor.execute("""
+    def Atualizar(primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento):
+        CONEXAO = Conexao.Dados()
+        CURSOR = CONEXAO.cursor()
+        CURSOR.execute("""
             UPDATE tb_usuario SET primeiro_nome_usuario = %s, ultimo_nome_usuario = %s, email_usuario = %s, senha_usuario = %s, cpf_usuario = %s, data_nasc_usuario = %s WHERE cpf_usuario = %s
-        """, ( primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento, cpf))
-        self.Conexao.commit()
-        cursor.close()
+        """, (primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento, cpf))
+        CONEXAO.commit()
+        CURSOR.close()
+        print("Dados atualizados com sucesso no banco de dados.")
+
+    
