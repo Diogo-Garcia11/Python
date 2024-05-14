@@ -1,4 +1,5 @@
 from conexao import Conexao
+import mysql.connector
 from mysql.connector import Error
 import re
 
@@ -6,9 +7,14 @@ class App:
     def Rodar():
         while True:
             
-            print("1. Inserir")
-            print("2. Atualizar")
-            print("3. Sair")
+            print("""
+                  1. Inserir
+                  2. Atualizar
+                  3. Consultar
+                  4. Deletar
+                  5. Sair
+                  """)
+            
             opcao = input("Escolha uma opção: ")
             if opcao == '1':
                 Conexao.Conectar()
@@ -34,11 +40,21 @@ class App:
                 Conexao.Atualizar(primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento)
                 Conexao.Desconectar() 
             elif opcao == '3':
+                Conexao.Conectar()
+                email = input("Insira o email: ")
+                resultado = Conexao.Consultar(email)
+                for busca in resultado:
+                    print(busca)
+                Conexao.Desconectar()
+            elif opcao == '4':
+                Conexao.Conectar()
+                email = input("Insira o email: ")
+                Conexao.Deletar(email)
+                Conexao.Desconectar()
+            elif opcao == '5':
                 break
             else:
                 print("Opção inválida.")      
-
-        Conexao.Desconectar()
 
 if __name__ == "__main__":
     App.Rodar()
