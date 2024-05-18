@@ -50,22 +50,34 @@ class Conexao:
         CURSOR.close()
         print("Dados atualizados com sucesso no banco de dados.")
 
-    def Consultar(email_usuario):
-        CONEXAO = Conexao.Dados
+    def ConsultaPersonalizada(email_usuario):
+        CONEXAO = Conexao.Dados()
         CURSOR = CONEXAO.cursor()
         CURSOR.execute("""
-            SELECT * FROM tb_usuarios WHERE email_usuario = %s
-        """, (email_usuario))
+            SELECT * FROM tb_usuario WHERE email_usuario = %s
+        """, (email_usuario,))
         resultado = CURSOR.fetchall()
         CURSOR.close()
-        return resultado
+        resultado_formatado = [", ".join(map(str, Linha)) for Linha in resultado]
+        return resultado_formatado
     
-    def Deletar(email_usuario)
-        CONEXAO.Conexao.Dados
+    def ConsultaGeral():
+        CONEXAO = Conexao.Dados()
         CURSOR = CONEXAO.cursor()
-        CURSOR.executr("""
-            DELETE FROM tb_usuarios WHERE email_usuario =%s
-        """, (email_usuario))
+        CURSOR.execute("""
+            SELECT * FROM tb_usuario
+        """)
+        resultado = CURSOR.fetchall()
+        CURSOR.close()
+        resultado_formatado = [", ".join(map(str, Linha)) for Linha in resultado]
+        return resultado_formatado
+    
+    def Deletar(email_usuario):
+        CONEXAO = Conexao.Dados()
+        CURSOR = CONEXAO.cursor()
+        CURSOR.execute("""
+            DELETE FROM tb_usuario WHERE email_usuario =%s
+        """, (email_usuario,))
         CONEXAO.commit()
         CURSOR.close()
         print("Dados Deletados com sucesso no banco de dados.")
