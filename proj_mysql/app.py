@@ -9,7 +9,7 @@ class App:
             print("""
                   1. Inserir
                   2. Atualizar
-                  3. Consulta Específica
+                  3. Consulta Personalizada
                   4. Consulta Geral
                   5. Deletar
                   6. Sair
@@ -68,5 +68,6 @@ class App:
             except Error as e:
                 print(f"Erro: {e}")
                 Conexao.Desconectar()
+                
 if __name__ == "__main__":
     App.Rodar()
