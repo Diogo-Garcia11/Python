@@ -1,11 +1,12 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod 
+from datetime import datetime
 class Conta:
-    def __init__(self, saldo:float, numero:int, agencia:str, cliente:'Cliente', historico:'Historico'):
-        self._saldo = saldo
+    def __init__(self, numero:int,cliente):
+        self._saldo = 0
         self._numero = numero
-        self._agencia = agencia
+        self._agencia = "0001"
         self._cliente = cliente
-        self._historico = historico
+        self._historico = Historico()
 
     @property
     def Saldo(self):
@@ -13,15 +14,14 @@ class Conta:
 
     @classmethod
     def nova_conta(cls, cliente,numero:int):
-        numero = cliente.contas(len)+1
         return cls(cliente, numero)
     
     @Saldo.setter
     def sacar(self, valor:float):
         _saldo = Conta.Saldo
-        limite = ContaCorrente.limite
-        limite_saques = ContaCorrente.limite_Saques
-        valor = Saque.self._valor
+        limite = ContaCorrente._limite
+        limite_saques = ContaCorrente._limite_saques
+        valor = Cliente.realizar_transacao
 
         if limite_saques >= 3:
             
@@ -38,60 +38,60 @@ class Conta:
 
     @Saldo.setter
     def depositar(self, valor:float):
-        _saldo = Conta.Saldo
-        valor = Deposito.self._valor
+        self._saldo = Conta.Saldo
+        valor = Cliente.realizar_transacao
 
         if valor <= 0:
             return False
         else:
             return True
+class ContaCorrente(Conta):
+    def __init__(self,  numero,  cliente, limite=500, limite_saques=3):
+        super().__init__( numero, cliente, )
         
-class Transacao(ABC):
-    
-    @abstractmethod
-    def registrar(conta:Conta):
-        pass
-
-class Cliente(Transacao): 
-    def __init__(self, endereco, *contas:'Conta'):
+        self._limite = limite
+        self._limite_saques = limite_saques
+class Cliente: 
+    def __init__(self, endereco:str):
         self._endereco = endereco
-        self._contas = contas
+        self._contas = []
+    
+    def realizar_transacao(self, conta, transacao):
+        transacao.registrar(conta)
 
-    def realizar_transacao(self, conta:Conta, transacao:Transacao):
-        pass
-
-    @classmethod
-    def adicionar_conta(self, conta:Conta):
+    def adicionar_conta(self, conta):
         self._contas.append(conta)
 
-    
-    def registrar(cls,conta):
-        pass
-
-class ContaCorrente(Conta):
-    def __init__(self):
-        self._limite = 500
-        self._limite_saques = 3
-
-class Historico(Transacao):
-    def adicionar_transacao(cls,transacao:Transacao):
-        pass
-
-    def registrar(cls,conta:Conta):
-        pass
-
-class Saque:
-    def __init__(self, valor):
-        self._valor = valor
-
-class Deposito:
-    def __init__(self, valor):
-        self._valor = valor
-
 class PessoaFisica(Cliente):
-    def __init__(self, cpf:str, nome:str, data_nascimento:str):
+    def __init__(self, cpf:str, nome:str, data_nascimento:datetime, endereco:str):
+        super().__init__(endereco)
         self._cpf = cpf
         self._nome = nome
-        self._data_nascimento = data_nascimento
+        self._data_nascimento = data_nascimento 
+    
 
+class Transacao(ABC):
+    @classmethod 
+    @abstractmethod 
+    def registrar(conta):
+        pass
 
+class Saque(Transacao):
+    def __init__(self, valor):
+        self._valor = valor
+    
+    def registrar(self,conta):
+        return Historico.adicionar_transacao(f"Sacou {self._valor}"), conta.self._valor
+
+class Deposito(Transacao):
+    def __init__(self, valor):
+        self._valor = valor
+    
+    def registrar(self,conta):
+
+        return Historico.adicionar_transacao(f"Depositou {self._valor}"), conta.self._valor
+
+class Historico:
+    
+    def adicionar_transacao(transacao):
+        transacao.registrar()
