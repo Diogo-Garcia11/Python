@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod 
+from abc import ABC, abstractmethod, abstractproperty, abstractclassmethod 
 from datetime import datetime
 class Conta:
     def __init__(self, numero:int,cliente):
@@ -9,49 +9,61 @@ class Conta:
         self._historico = Historico()
 
     @property
-    def Saldo(self):
+    def saldo(self):
         return float(self._saldo)
 
     @classmethod
     def nova_conta(cls, cliente,numero:int):
         return cls(cliente, numero)
     
-    @Saldo.setter
+
     def sacar(self, valor:float):
-        _saldo = Conta.Saldo
-        limite = ContaCorrente._limite
-        limite_saques = ContaCorrente._limite_saques
-        valor = Cliente.realizar_transacao
+        _saldo = self.saldo
+        excedeu_saldo = valor > _saldo
 
-        if limite_saques >= 3:
-            
+        if excedeu_saldo: 
+            print("Saldo insuficiente")
+            return False
+        elif valor <= 0:
+            print("Valor inválido")
             return False
         else:
-            if valor > _saldo: 
-                return False
-            elif valor <= 0:
-                return False
-            elif valor > limite:
-                return False
-            else:
-                return True
-
-    @Saldo.setter
+            print("Saque realizado com sucesso")
+            _saldo -= valor
+            return True            
+    
     def depositar(self, valor:float):
-        self._saldo = Conta.Saldo
-        valor = Cliente.realizar_transacao
-
+        self._saldo = self.saldo
+        
         if valor <= 0:
+            print("Valor inválido")
             return False
         else:
+            _saldo += valor
             return True
 class ContaCorrente(Conta):
     def __init__(self,  numero,  cliente, limite=500, limite_saques=3):
-        super().__init__( numero, cliente, )
-        
+        super().__init__( numero, cliente )
         self._limite = limite
         self._limite_saques = limite_saques
-class Cliente: 
+
+    def sacar(self, valor):
+        numero_saques = len([transacao for transacao in self.historico.transacoes if transacao["tipo"] == Saque.__name__])
+        excedeu_limite = valor > self._limite
+        excedeu_saques = numero_saques >=self.limite_saques
+        if excedeu_limite:
+            print("Limite de saque atingido")
+        elif excedeu_saques:
+            print(f"Limite de saques diários: {self._limite_saques} atingido")
+        else:
+            return super().sacar(valor)
+    def __str__(self):
+        return f"""\
+                Agência:\t {self._agencia}
+                C/C:\t {self._numero}
+                Titular:\t{self._cliente._nome}
+                """                 
+class Cliente:
     def __init__(self, endereco:str):
         self._endereco = endereco
         self._contas = []
@@ -71,8 +83,12 @@ class PessoaFisica(Cliente):
     
 
 class Transacao(ABC):
-    @classmethod 
-    @abstractmethod 
+    @property 
+    @abstractmethod
+    def valor(self):
+        pass
+    @classmethod
+    @abstractmethod
     def registrar(conta):
         pass
 
@@ -80,18 +96,44 @@ class Saque(Transacao):
     def __init__(self, valor):
         self._valor = valor
     
+    @property
+    def valor(self):
+        return self._valor
+    
     def registrar(self,conta):
-        return Historico.adicionar_transacao(f"Sacou {self._valor}"), conta.self._valor
+        sucesso_transacao = conta.sacar(self._valor)
+        
+        if sucesso_transacao:
+            conta.historico.adicionar_transacao(self)
+        
 
 class Deposito(Transacao):
     def __init__(self, valor):
         self._valor = valor
+
+    @property
+    def valor(self):
+        return self._valor
     
     def registrar(self,conta):
-
-        return Historico.adicionar_transacao(f"Depositou {self._valor}"), conta.self._valor
+        sucesso_transacao = conta.sacar(self._valor)
+        if sucesso_transacao:
+            conta.historico.adicionar_transacao(self) 
+        
 
 class Historico:
+    def __init__(self):
+        self._transacoes = []
+
+    @property
+    def transacoes(self):
+        return self._transacoes
     
-    def adicionar_transacao(transacao):
-        transacao.registrar()
+    def adicionar_transacao(self,transacao):
+        self._transacoes.append(
+            {
+                "tipo" : transacao.__class__.__name__,
+                "valor" : transacao._valor,
+                "data" : datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            }
+        )
