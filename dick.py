@@ -1,0 +1,15 @@
+contatos = {
+    "guilherme@gmail.com":{"nome": "Guilherme", "telefone": "3333-2221"},
+    "giovanni@gmail.com":{"nome": "Giovanni", "telefone": "3443-2121"},
+    "chappie@gmail.com":{"nome": "Chappie", "telefone": "3344-9871"},
+    "melaine@gmail.com":{"nome": "Melaine", "telefone": "3333-7766"},
+
+}
+
+for chave in contatos:
+    print(chave, contatos[chave])
+
+for chave, valor in contatos.items():
+    print(chave, valor)
+
+print(contatos.items())
