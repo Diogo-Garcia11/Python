@@ -37,12 +37,12 @@ class Conexao:
             CURSOR.execute("""
                 INSERT INTO tb_usuario (primeiro_nome_usuario, ultimo_nome_usuario, email_usuario, senha_usuario, cpf_usuario, data_nasc_usuario) VALUES (%s, %s, %s, %s, %s, %s)
             """, (primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento))
-            CONEXAO.commit()
             print("Dados Cadastrados com sucesso no banco de dados.")
         except Exception as e:
             print(f"Erro ao inserir: {e}")
             CONEXAO.rollback()
         finally:
+            CONEXAO.commit()
             CURSOR.close()
             
 
@@ -53,12 +53,12 @@ class Conexao:
             CURSOR.execute("""
                 UPDATE tb_usuario SET primeiro_nome_usuario = %s, ultimo_nome_usuario = %s, email_usuario = %s, senha_usuario = %s, cpf_usuario = %s, data_nasc_usuario = %s WHERE cpf_usuario = %s
             """, (primeiro_nome, ultimo_nome, email, senha, cpf, data_nascimento, cpf))
-            CONEXAO.commit()
             print("Dados atualizados com sucesso no banco de dados.")
         except Exception as e:
             print(f"Erro ao atualizar: {e}")
             CONEXAO.rollback()
         finally:
+            CONEXAO.commit()
             CURSOR.close()
         
     def ConsultaPersonalizada(email_usuario):
@@ -99,10 +99,10 @@ class Conexao:
             CURSOR.execute("""
                 DELETE FROM tb_usuario WHERE email_usuario =%s
             """, (email_usuario,))
-            CONEXAO.commit()
             print("Dados Deletados com sucesso no banco de dados.")
         except Exception as e:
             print(f"Erro ao deletar: {e}")
             CONEXAO.rollback()
         finally:
+            CONEXAO.commit()
             CURSOR.close()
